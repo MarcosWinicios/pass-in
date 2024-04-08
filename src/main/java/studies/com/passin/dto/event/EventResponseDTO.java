@@ -1,7 +1,9 @@
 package studies.com.passin.dto.event;
 
+import lombok.Getter;
 import studies.com.passin.domain.event.Event;
 
+@Getter
 public class EventResponseDTO {
 
     EventDetailDTO event;

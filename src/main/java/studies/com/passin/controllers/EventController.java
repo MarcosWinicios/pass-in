@@ -29,7 +29,7 @@ public class EventController {
         EventIdDTO eventIdDTO = this.service.createEvent(body);
 
         var uri = uriComponentsBuilder.path("/events/{id}").buildAndExpand(eventIdDTO.eventId()).toUri();
-        
+
         return  ResponseEntity.created(uri).body(eventIdDTO);
     }
 }
