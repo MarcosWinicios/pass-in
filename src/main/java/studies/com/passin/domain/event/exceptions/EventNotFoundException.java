@@ -1,4 +1,4 @@
-package studies.com.passin.dto.event.exceptions;
+package studies.com.passin.domain.event.exceptions;
 
 public class EventNotFoundException extends RuntimeException {
     public EventNotFoundException (String message){
