@@ -8,6 +8,7 @@ import studies.com.passin.domain.event.Event;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
+import studies.com.passin.dto.event.exceptions.EventNotFoundException;
 import studies.com.passin.repositories.AttendeeRepository;
 import studies.com.passin.repositories.EventRepository;
 
@@ -25,7 +26,7 @@ public class EventService {
     public EventResponseDTO getEventDetail(String eventId){
 
         Event event = this.eventRepository.findById(eventId).orElseThrow(
-                () -> new RuntimeException("Event not found with Id: " + eventId));
+                () -> new EventNotFoundException("Event not found with Id: " + eventId));
 
         List<Attendee> attendeeList = this.ateAttendeeRepository.findByEventId(eventId);
 
