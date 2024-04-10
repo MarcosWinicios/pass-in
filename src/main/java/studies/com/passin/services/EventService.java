@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.event.Event;
+import studies.com.passin.domain.event.exceptions.EventFullException;
+import studies.com.passin.dto.attendee.AttendeeIdDTO;
+import studies.com.passin.dto.attendee.AttendeeRequestDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
@@ -11,6 +14,7 @@ import studies.com.passin.domain.event.exceptions.EventNotFoundException;
 import studies.com.passin.repositories.EventRepository;
 
 import java.text.Normalizer;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -41,6 +45,33 @@ public class EventService {
 
         return new EventIdDTO(newEvent.getId());
     }
+
+    public AttendeeIdDTO registerAttendeeOnEvent(String eventId, AttendeeRequestDTO attendeeRequestDTO){
+        this.ateAttendeeService.verifyAttendeeSubscription(attendeeRequestDTO.email(), eventId);
+
+        Event event = this.getEventById(eventId);
+        List<Attendee> attendeeList = this.ateAttendeeService.getAllAttendeesFromEvent(eventId);
+
+        if(event.getMaximumAttendees() <= attendeeList.size()){
+            throw new EventFullException("Event is Full");
+        }
+
+        Attendee newAttendee = new Attendee();
+
+        newAttendee.setName(attendeeRequestDTO.name());
+        newAttendee.setEmail(attendeeRequestDTO.email());
+        newAttendee.setEvent(event);
+        newAttendee.setCreatedAt(LocalDateTime.now());
+        this.ateAttendeeService.registerAttendee(newAttendee);
+
+        return new AttendeeIdDTO(newAttendee.getId());
+    }
+
+    private Event getEventById(String eventId){
+        return this.eventRepository.findById(eventId).orElseThrow(
+                () -> new EventNotFoundException("Event not found with Id: " + eventId));
+    }
+
 
     private String createSlug(String text){
         String normalized = Normalizer.normalize(text, Normalizer.Form.NFD);
