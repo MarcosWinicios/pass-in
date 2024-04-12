@@ -56,4 +56,5 @@ public class EventController {
 
         return  ResponseEntity.created(uri).body(attendeeIdDTO);
     }
+
 }

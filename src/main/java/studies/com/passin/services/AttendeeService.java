@@ -1,7 +1,10 @@
 package studies.com.passin.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponentsBuilder;
 import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendee.exceptions.AttendeeAlreadyExistException;
@@ -64,6 +67,10 @@ public class AttendeeService {
         return newAttendee;
     }
 
+    public void deleteAttendee(String attendId){
+        this.attendeeRepository.delete(this.getAttendee(attendId));
+    }
+
     public void checkInAttendee(String attendeeId) {
         Attendee attendee = this.getAttendee(attendeeId);
         this.checkInService.registerCheckIn(attendee);
@@ -74,6 +81,7 @@ public class AttendeeService {
                 .findById(attendeeId)
                 .orElseThrow(() -> new AttendeeNotFoundException("Attendee not found with ID: " + attendeeId));
     }
+
 
     public AttendeeBadgeResponseDTO getAttendeeBadge(String attendeeId, UriComponentsBuilder uriComponentsBuilder){
 
@@ -88,4 +96,5 @@ public class AttendeeService {
 
         return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
     }
+
 }

@@ -24,11 +24,19 @@ public class AttendeeController {
     }
 
     @PostMapping("{attendeeId}/check-in")
-    public ResponseEntity registerCheckIn(@PathVariable String attendeeId, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<Void> registerCheckIn(@PathVariable String attendeeId, UriComponentsBuilder uriComponentsBuilder){
         this.attendeeService.checkInAttendee(attendeeId);
 
         var uri =  uriComponentsBuilder.path("/attendees/{attendeeId}/badge").buildAndExpand(attendeeId).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/{attendeeId}")
+    public ResponseEntity<Void> deleteAttendee(@PathVariable String attendeeId){
+
+        this.attendeeService.deleteAttendee(attendeeId);
+
+        return  ResponseEntity.noContent().build();
     }
 }

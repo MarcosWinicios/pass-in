@@ -80,4 +80,5 @@ public class EventService {
                 replaceAll("\\s+", "-")
                 .toLowerCase();
     }
+
 }
