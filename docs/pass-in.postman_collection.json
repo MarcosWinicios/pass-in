@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "7f47a2dd-54e1-4c29-9768-64eabcd85a20",
+		"name": "pass-in",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15910918"
+	},
+	"item": [
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "Detalhes do Evento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/events/005f4891-d0dc-4106-8b38-ae8cc6379b3d",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events",
+								"005f4891-d0dc-4106-8b38-ae8cc6379b3d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Participantes do Evento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/events/005f4891-d0dc-4106-8b38-ae8cc6379b3d/attendees",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events",
+								"005f4891-d0dc-4106-8b38-ae8cc6379b3d",
+								"attendees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Evento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Novo evento\",\n    \"details\": \"Aprenda Várias tecnologias de forma Gratuita e Online!\",\n    \"maximumAttendees\": 2\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/events",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar participante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Marcos Winicios\",\n    \"email\": \"marcos@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/events/005f4891-d0dc-4106-8b38-ae8cc6379b3d/attendees",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events",
+								"005f4891-d0dc-4106-8b38-ae8cc6379b3d",
+								"attendees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "attendee",
+			"item": [
+				{
+					"name": "Consultar crachá",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c/badge",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"attendees",
+								"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
+								"badge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar check-in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c/check-in",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"attendees",
+								"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
+								"check-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Participante",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Marcos Winicios Sósia\",\n    \"email\": \"teste2@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"attendees",
+								"ecafb491-9af1-44ec-99b1-a709a7b9e70c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
