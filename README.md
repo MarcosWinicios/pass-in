@@ -1,6 +1,6 @@
 # Pass in (v1.0.0)
 
-# Sobre o projeto
+## Sobre o projeto
 Pass In é um projeto backend desenvolvido sob orientação da [RocketSeat](https://www.rocketseat.com.br/).
 
 Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é possível cadastrar eventos e adicionar participantes a cada evento.
