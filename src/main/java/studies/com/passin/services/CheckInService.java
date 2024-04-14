@@ -40,4 +40,13 @@ public class CheckInService {
     public Optional<CheckIn> getCheckIn(String attendeeId) {
         return this.checkInRepository.findByAttendeeId(attendeeId);
     }
+
+    public void deleteCheckIn(String attendeeId){
+        Optional<CheckIn> checkIn = this.getCheckIn(attendeeId);
+
+        if(checkIn.isPresent()){
+            this.checkInRepository.delete(checkIn.get());
+        }
+
+    }
 }

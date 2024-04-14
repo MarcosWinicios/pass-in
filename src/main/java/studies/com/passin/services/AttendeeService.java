@@ -68,6 +68,7 @@ public class AttendeeService {
     }
 
     public void deleteAttendee(String attendId){
+        this.checkInService.deleteCheckIn(attendId);
         this.attendeeRepository.delete(this.getAttendee(attendId));
     }
 
