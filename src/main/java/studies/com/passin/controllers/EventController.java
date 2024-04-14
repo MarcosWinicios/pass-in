@@ -8,11 +8,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import studies.com.passin.dto.attendee.AttendeeIdDTO;
 import studies.com.passin.dto.attendee.AttendeeRequestDTO;
 import studies.com.passin.dto.attendee.AttendeesListResponseDTO;
+import studies.com.passin.dto.event.EventDetailDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
 import studies.com.passin.services.AttendeeService;
 import studies.com.passin.services.EventService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/events")
@@ -21,6 +24,13 @@ public class EventController {
 
     private final EventService eventService;
     private final AttendeeService attendeeService;
+
+    @GetMapping
+    public  ResponseEntity<List<EventDetailDTO>> getAllEvent(){
+        var response  = this.eventService.getAllEvents();
+
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/{eventId}")
     public ResponseEntity<EventResponseDTO> getEvent(@PathVariable String eventId){

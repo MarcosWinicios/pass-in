@@ -7,6 +7,7 @@ import studies.com.passin.domain.event.Event;
 import studies.com.passin.domain.event.exceptions.EventFullException;
 import studies.com.passin.dto.attendee.AttendeeIdDTO;
 import studies.com.passin.dto.attendee.AttendeeRequestDTO;
+import studies.com.passin.dto.event.EventDetailDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
@@ -23,6 +24,21 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final AttendeeService ateAttendeeService;
+
+    public List<EventDetailDTO> getAllEvents(){
+        return this.eventRepository
+                .findAll()
+                .stream()
+                .map( event -> new EventDetailDTO(
+                        event.getId(),
+                        event.getTitle(),
+                        event.getDetails(),
+                        event.getSlug(),
+                        event.getMaximumAttendees(),
+                        this.ateAttendeeService.getAllAttendeesFromEvent(event.getId()).size()
+                ))
+                .toList();
+    }
 
     public EventResponseDTO getEventDetail(String eventId){
 
