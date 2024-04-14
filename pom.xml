@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>studies.com</groupId>
 	<artifactId>pass-in</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>pass-in</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
