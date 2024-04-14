@@ -13,7 +13,7 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 - Inscrever participante em um evento;
 - Visualizar crachá de inscrição do participante;
 - Realizar check-in do participante no evento;
-- Excluir um participante
+- Excluir um participante;
 
 ## Regras de negócio
 - O participante só pode se inscrever em um evento uma única vez;
