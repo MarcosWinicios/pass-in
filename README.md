@@ -1,4 +1,4 @@
-# Pass in (v1.0.0)
+# Pass in (develop)
 
 ## Sobre o projeto
 Pass In é um projeto backend desenvolvido sob orientação da [RocketSeat](https://www.rocketseat.com.br/).
