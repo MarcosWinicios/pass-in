@@ -23,7 +23,7 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 ## Diagrama de banco de dados
 ![Image](https://github.com/MarcosWinicios/pass-in/blob/ffd501b830a3a3e45041be092a7cd41fc1c2ccf1/docs/database-diagram.png?raw=true)
 
-# Tecnologias utilizadas
+## Tecnologias utilizadas
 - Java
 - Lombok
 - Spring Boot
@@ -32,7 +32,7 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 - HyperSQL
 - Postman
 
-# Como executar o projeto
+## Como executar o projeto
 Pré-requisitos: JDK 17
 
 
@@ -57,6 +57,6 @@ cd pass-in
 - Com isso será possível realizar realizar requisições nos endpoints em ambiente local.
 
  
-# Autor
+## Autor
 Marcos Winicios Pereira Martins
 https://www.linkedin.com/in/marcoswp/
