@@ -63,7 +63,7 @@ public class EventService {
     }
 
     public AttendeeIdDTO registerAttendeeOnEvent(String eventId, AttendeeRequestDTO attendeeRequestDTO){
-        this.ateAttendeeService.verifyAttendeeSubscription(attendeeRequestDTO.email(), eventId);
+        this.ateAttendeeService.checkEmailDuplicity(attendeeRequestDTO.email(), eventId);
 
         Event event = this.getEventById(eventId);
         List<Attendee> attendeeList = this.ateAttendeeService.getAllAttendeesFromEvent(eventId);

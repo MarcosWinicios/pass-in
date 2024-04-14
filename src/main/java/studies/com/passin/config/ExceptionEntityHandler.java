@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import studies.com.passin.domain.attendee.exceptions.AttendeeAlreadyExistException;
+import studies.com.passin.domain.attendee.exceptions.EmailAlreadyInUseException;
 import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.checkIn.exceptions.CheckInAlreadyExistsException;
 import studies.com.passin.domain.event.exceptions.EventFullException;
@@ -29,8 +29,8 @@ public class ExceptionEntityHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponseDTO(exception.getMessage()));
     }
 
-    @ExceptionHandler(AttendeeAlreadyExistException.class)
-    public ResponseEntity<ErrorResponseDTO>  handleAttendeeAlreadyExist(AttendeeAlreadyExistException exception){
+    @ExceptionHandler(EmailAlreadyInUseException.class)
+    public ResponseEntity<ErrorResponseDTO>  handleAttendeeAlreadyExist(EmailAlreadyInUseException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponseDTO(exception.getMessage()));
     }
 

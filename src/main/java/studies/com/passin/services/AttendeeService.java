@@ -1,13 +1,10 @@
 package studies.com.passin.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.UriComponentsBuilder;
 import studies.com.passin.domain.attendee.Attendee;
-import studies.com.passin.domain.attendee.exceptions.AttendeeAlreadyExistException;
+import studies.com.passin.domain.attendee.exceptions.EmailAlreadyInUseException;
 import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.checkIn.CheckIn;
 import studies.com.passin.dto.attendee.AttendeeBadgeResponseDTO;
@@ -15,7 +12,6 @@ import studies.com.passin.dto.attendee.AttendeeDetails;
 import studies.com.passin.dto.attendee.AttendeesListResponseDTO;
 import studies.com.passin.dto.attendee.AttendeeBadgeDTO;
 import studies.com.passin.repositories.AttendeeRepository;
-import studies.com.passin.repositories.CheckInRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,12 +47,11 @@ public class AttendeeService {
         return new AttendeesListResponseDTO(attendeeDetailsList);
     }
 
-
-    public void verifyAttendeeSubscription(String email, String eventId){
+    public void checkEmailDuplicity(String email, String eventId){
         Optional<Attendee> isAttendeeRegistered = this.attendeeRepository.findByEventIdAndEmail(eventId, email);
 
         if(isAttendeeRegistered.isPresent()){
-            throw new AttendeeAlreadyExistException("Attendee is already registered");
+            throw new EmailAlreadyInUseException("Este email já está em uso");
         }
 
     }
@@ -97,5 +92,6 @@ public class AttendeeService {
 
         return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
     }
+
 
 }
