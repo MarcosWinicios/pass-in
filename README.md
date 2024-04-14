@@ -5,6 +5,21 @@ Pass In é um projeto backend desenvolvido sob orientação da [RocketSeat](http
 
 Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é possível cadastrar eventos e adicionar participantes a cada evento.
 
+## Funcionalidades
+- Cadastrar um novo evento;
+- Visualizar dados de um evento;
+- Visualizar a lista de participantes;
+- Listar todos os eventos;
+- Inscrever participante em um evento;
+- Visualizar crachá de inscrição do participante;
+- Realizar check-in do participante no evento;
+- Excluir um participante
+
+## Regras de negócio
+- O participante só pode se inscrever em um evento uma única vez;
+- O participante só pode se inscrever em eventos com vagas disponíveis;
+- O participante só pode realizar check-in em um evento uma única vez;
+
 ## Diagrama de banco de dados
 ![Image](https://github.com/MarcosWinicios/pass-in/blob/ffd501b830a3a3e45041be092a7cd41fc1c2ccf1/docs/database-diagram.png?raw=true)
 
