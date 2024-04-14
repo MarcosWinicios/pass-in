@@ -28,6 +28,23 @@
 					"response": []
 				},
 				{
+					"name": "Obter todos os eventos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/events",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Participantes do Evento",
 					"request": {
 						"method": "GET",
@@ -158,13 +175,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c",
+							"raw": "{{host}}/attendees/f10d4172-c7ac-4c73-94a9-47b2ee60aa73",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"attendees",
-								"ecafb491-9af1-44ec-99b1-a709a7b9e70c"
+								"f10d4172-c7ac-4c73-94a9-47b2ee60aa73"
 							]
 						}
 					},
