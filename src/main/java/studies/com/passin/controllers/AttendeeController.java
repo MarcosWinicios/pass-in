@@ -1,19 +1,36 @@
 package studies.com.passin.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import studies.com.passin.dto.attendee.AttendeeBadgeResponseDTO;
+import studies.com.passin.dto.attendee.AttendeeIdDTO;
+import studies.com.passin.dto.attendee.AttendeeRequestDTO;
 import studies.com.passin.services.AttendeeService;
 import studies.com.passin.services.CheckInService;
 
 @RestController
 @RequestMapping("/attendees")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class AttendeeController {
+
+    @Autowired
+    private AttendeeService attendeeService;
+
+    @PostMapping
+    public ResponseEntity<AttendeeIdDTO> registerAttendee(@RequestBody AttendeeRequestDTO body, UriComponentsBuilder uriComponentsBuilder){
+        AttendeeIdDTO attendeeIdDTO = this.attendeeService.registerAttendee(body);
+
+        var uri = uriComponentsBuilder.path("/attendees/{attendeeId}/badge")
+                .buildAndExpand(attendeeIdDTO.attendeeId())
+                .toUri();
+
+        return  ResponseEntity.created(uri).body(attendeeIdDTO);
+    }
 /*
-    private final AttendeeService attendeeService;
+
     private final CheckInService checkInService;
 
     @GetMapping("/{attendeeId}/badge")

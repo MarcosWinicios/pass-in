@@ -7,10 +7,7 @@ import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendee.exceptions.EmailAlreadyInUseException;
 import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.checkIn.CheckIn;
-import studies.com.passin.dto.attendee.AttendeeBadgeResponseDTO;
-import studies.com.passin.dto.attendee.AttendeeDetails;
-import studies.com.passin.dto.attendee.AttendeesListResponseDTO;
-import studies.com.passin.dto.attendee.AttendeeBadgeDTO;
+import studies.com.passin.dto.attendee.*;
 import studies.com.passin.repositories.AttendeeRepository;
 
 import java.time.LocalDateTime;
@@ -20,8 +17,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AttendeeService {
-/*
+
     private final AttendeeRepository attendeeRepository;
+
+
+/*
+
     private final CheckInService checkInService;
 
     public List<Attendee> getAllAttendeesFromEvent(String eventId){
@@ -47,20 +48,6 @@ public class AttendeeService {
         return new AttendeesListResponseDTO(attendeeDetailsList);
     }
 
-    public void checkEmailDuplicity(String email, String eventId){
-        Optional<Attendee> isAttendeeRegistered = this.attendeeRepository.findByEventIdAndEmail(eventId, email);
-
-        if(isAttendeeRegistered.isPresent()){
-            throw new EmailAlreadyInUseException("Este email já está em uso");
-        }
-
-    }
-
-    public Attendee registerAttendee(Attendee newAttendee){
-        this.attendeeRepository.save(newAttendee);
-
-        return newAttendee;
-    }
 
     public void deleteAttendee(String attendId){
         this.checkInService.deleteCheckIn(attendId);
@@ -93,5 +80,34 @@ public class AttendeeService {
         return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
     }
     */
+
+    public AttendeeIdDTO registerAttendee(AttendeeRequestDTO attendeeRequestDTO){
+        this.checkEmailDuplicity(attendeeRequestDTO.email());
+
+        Attendee newAttendee = new Attendee();
+
+        newAttendee.setName(attendeeRequestDTO.name());
+        newAttendee.setEmail(attendeeRequestDTO.email());
+        newAttendee.setCreatedAt(LocalDateTime.now());
+
+        System.out.println("Attendee before: " + newAttendee);
+
+        this.attendeeRepository.save(newAttendee);
+
+        System.out.println("Attendee after: " + newAttendee);
+
+        return new AttendeeIdDTO(newAttendee.getId());
+    }
+
+
+    public void checkEmailDuplicity(String email){
+        Optional<Attendee> isAttendeeRegistered = this.attendeeRepository.findByEmail(email);
+
+        if(isAttendeeRegistered.isPresent()){
+            throw new EmailAlreadyInUseException("Este email já está em uso");
+        }
+
+    }
+
 
 }
