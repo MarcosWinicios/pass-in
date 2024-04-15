@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/attendees")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class AttendeeController {
 
     @Autowired
