@@ -22,34 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventService {
 
-/*
+
     private final EventRepository eventRepository;
-    private final AttendeeService ateAttendeeService;
-
-    public List<EventDetailDTO> getAllEvents(){
-        return this.eventRepository
-                .findAll()
-                .stream()
-                .map( event -> new EventDetailDTO(
-                        event.getId(),
-                        event.getTitle(),
-                        event.getDetails(),
-                        event.getSlug(),
-                        event.getMaximumAttendees(),
-                        this.ateAttendeeService.getAllAttendeesFromEvent(event.getId()).size()
-                ))
-                .toList();
-    }
-
-    public EventResponseDTO getEventDetail(String eventId){
-
-        Event event = this.eventRepository.findById(eventId).orElseThrow(
-                () -> new EventNotFoundException("Event not found with Id: " + eventId));
-
-        List<Attendee> attendeeList = this.ateAttendeeService.getAllAttendeesFromEvent(eventId);
-
-        return new EventResponseDTO(event, attendeeList.size());
-    }
 
     public EventIdDTO createEvent(EventRequestDTO eventDTO){
         Event newEvent =  new Event();
@@ -62,6 +36,35 @@ public class EventService {
 
         return new EventIdDTO(newEvent.getId());
     }
+
+    public List<EventDetailDTO> getAllEvents(){
+        return this.eventRepository
+                .findAll()
+                .stream()
+                .map( event -> new EventDetailDTO(
+                        event.getId(),
+                        event.getTitle(),
+                        event.getDetails(),
+                        event.getSlug(),
+                        event.getMaximumAttendees(),
+                        2 //this.ateAttendeeService.getAllAttendeesFromEvent(event.getId()).size()
+                ))
+                .toList();
+    }
+
+    public EventResponseDTO getEventDetail(String eventId){
+
+        Event event = this.getEventById(eventId);
+
+//        List<Attendee> attendeeList = this.ateAttendeeService.getAllAttendeesFromEvent(eventId);
+
+        return new EventResponseDTO(event, 2);
+    }
+
+/*
+    private final EventRepository eventRepository;
+    private final AttendeeService ateAttendeeService;
+
 
     public AttendeeIdDTO registerAttendeeOnEvent(String eventId, AttendeeRequestDTO attendeeRequestDTO){
         this.ateAttendeeService.checkEmailDuplicity(attendeeRequestDTO.email(), eventId);
@@ -84,11 +87,12 @@ public class EventService {
         return new AttendeeIdDTO(newAttendee.getId());
     }
 
+ */
+
     private Event getEventById(String eventId){
         return this.eventRepository.findById(eventId).orElseThrow(
                 () -> new EventNotFoundException("Event not found with Id: " + eventId));
     }
-
 
     private String createSlug(String text){
         String normalized = Normalizer.normalize(text, Normalizer.Form.NFD);
@@ -97,6 +101,4 @@ public class EventService {
                 replaceAll("\\s+", "-")
                 .toLowerCase();
     }
-
- */
 }

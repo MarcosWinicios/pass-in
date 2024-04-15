@@ -21,9 +21,19 @@ import java.util.List;
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
-/*
+
     private final EventService eventService;
-    private final AttendeeService attendeeService;
+
+    @PostMapping
+    public ResponseEntity<EventIdDTO> createEvent(@RequestBody EventRequestDTO body, UriComponentsBuilder uriComponentsBuilder){
+        EventIdDTO eventIdDTO = this.eventService.createEvent(body);
+
+        var uri = uriComponentsBuilder.path("/events/{id}")
+                .buildAndExpand(eventIdDTO.eventId())
+                .toUri();
+
+        return  ResponseEntity.created(uri).body(eventIdDTO);
+    }
 
     @GetMapping
     public  ResponseEntity<List<EventDetailDTO>> getAllEvent(){
@@ -39,16 +49,10 @@ public class EventController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<EventIdDTO> createEvent(@RequestBody EventRequestDTO body, UriComponentsBuilder uriComponentsBuilder){
-        EventIdDTO eventIdDTO = this.eventService.createEvent(body);
+/*
+    private final EventService eventService;
+    private final AttendeeService attendeeService;
 
-        var uri = uriComponentsBuilder.path("/events/{id}")
-                .buildAndExpand(eventIdDTO.eventId())
-                .toUri();
-
-        return  ResponseEntity.created(uri).body(eventIdDTO);
-    }
 
     @GetMapping("/{eventId}/attendees")
     public ResponseEntity<AttendeesListResponseDTO> getEventAttendees(@PathVariable String eventId){
