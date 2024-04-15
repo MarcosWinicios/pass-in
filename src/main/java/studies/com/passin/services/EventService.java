@@ -22,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventService {
 
+/*
     private final EventRepository eventRepository;
     private final AttendeeService ateAttendeeService;
 
@@ -97,4 +98,5 @@ public class EventService {
                 .toLowerCase();
     }
 
+ */
 }

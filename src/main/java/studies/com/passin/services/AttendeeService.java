@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AttendeeService {
-
+/*
     private final AttendeeRepository attendeeRepository;
     private final CheckInService checkInService;
 
@@ -92,6 +92,6 @@ public class AttendeeService {
 
         return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
     }
-
+    */
 
 }

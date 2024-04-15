@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
-
+/*
     private final EventService eventService;
     private final AttendeeService attendeeService;
 
@@ -67,4 +67,6 @@ public class EventController {
         return  ResponseEntity.created(uri).body(attendeeIdDTO);
     }
 
+
+ */
 }

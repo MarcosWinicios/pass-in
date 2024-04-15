@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CheckInService {
-
+/*
     private final CheckInRepository checkInRepository;
 
     public void registerCheckIn(Attendee attendee){
@@ -49,4 +49,6 @@ public class CheckInService {
         }
 
     }
+
+ */
 }

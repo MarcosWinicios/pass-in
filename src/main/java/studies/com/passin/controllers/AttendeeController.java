@@ -12,7 +12,7 @@ import studies.com.passin.services.CheckInService;
 @RequestMapping("/attendees")
 @RequiredArgsConstructor
 public class AttendeeController {
-
+/*
     private final AttendeeService attendeeService;
     private final CheckInService checkInService;
 
@@ -39,4 +39,6 @@ public class AttendeeController {
 
         return  ResponseEntity.noContent().build();
     }
+
+ */
 }
