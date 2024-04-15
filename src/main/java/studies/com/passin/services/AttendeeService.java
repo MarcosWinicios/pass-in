@@ -81,6 +81,34 @@ public class AttendeeService {
     }
     */
 
+    public List<AttendeeDetailsDTO> getAllAttendees(){
+        List<Attendee> attendeeList = this.attendeeRepository.findAll();
+
+        return attendeeList.stream().map(attendee -> new AttendeeDetailsDTO(
+                attendee.getId(),
+                attendee.getName(),
+                attendee.getEmail(),
+                attendee.getCreatedAt()
+        )).toList();
+
+    }
+    public AttendeeDetailsDTO getAttendeeDetails(String attendeeId){
+        Attendee attendee = this.getAttendee(attendeeId);
+
+         return new AttendeeDetailsDTO(
+                attendee.getId(),
+                attendee.getName(),
+                attendee.getEmail(),
+                attendee.getCreatedAt());
+    }
+
+    private Attendee getAttendee(String attendeeId){
+        return this.attendeeRepository
+                .findById(attendeeId)
+                .orElseThrow(() -> new AttendeeNotFoundException("Attendee not found with ID: " + attendeeId));
+    }
+
+
     public AttendeeIdDTO registerAttendee(AttendeeRequestDTO attendeeRequestDTO){
         this.checkEmailDuplicity(attendeeRequestDTO.email());
 
