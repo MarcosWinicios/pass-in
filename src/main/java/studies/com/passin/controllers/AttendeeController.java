@@ -46,6 +46,14 @@ public class AttendeeController {
 
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{attendeeId}")
+    public ResponseEntity<Void> deleteAttendee(@PathVariable String attendeeId){
+
+        this.attendeeService.deleteAttendee(attendeeId);
+
+        return  ResponseEntity.noContent().build();
+    }
 /*
 
     private final CheckInService checkInService;
@@ -66,13 +74,6 @@ public class AttendeeController {
         return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping("/{attendeeId}")
-    public ResponseEntity<Void> deleteAttendee(@PathVariable String attendeeId){
-
-        this.attendeeService.deleteAttendee(attendeeId);
-
-        return  ResponseEntity.noContent().build();
-    }
 
  */
 }

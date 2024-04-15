@@ -48,12 +48,6 @@ public class AttendeeService {
         return new AttendeesListResponseDTO(attendeeDetailsList);
     }
 
-
-    public void deleteAttendee(String attendId){
-        this.checkInService.deleteCheckIn(attendId);
-        this.attendeeRepository.delete(this.getAttendee(attendId));
-    }
-
     public void checkInAttendee(String attendeeId) {
         Attendee attendee = this.getAttendee(attendeeId);
         this.checkInService.registerCheckIn(attendee);
@@ -135,6 +129,11 @@ public class AttendeeService {
             throw new EmailAlreadyInUseException("Este email já está em uso");
         }
 
+    }
+
+    public void deleteAttendee(String attendId){
+//        this.checkInService.deleteCheckIn(attendId);
+        this.attendeeRepository.delete(this.getAttendee(attendId));
     }
 
 
