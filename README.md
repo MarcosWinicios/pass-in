@@ -14,6 +14,7 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 - Visualizar crachá de inscrição do participante;
 - Realizar check-in do participante no evento;
 - Excluir um participante;
+- Asssociar participantes a eventos;
 
 ## Regras de negócio
 - O participante só pode se inscrever em um evento uma única vez;
