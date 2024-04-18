@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import studies.com.passin.dto.attendee.AttendeeIdDTO;
-import studies.com.passin.dto.attendee.AttendeeRequestDTO;
-import studies.com.passin.dto.attendee.AttendeesListResponseDTO;
+import studies.com.passin.dto.attendee.*;
 import studies.com.passin.dto.event.EventDetailDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
@@ -23,6 +21,7 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+
 
     @PostMapping
     public ResponseEntity<EventIdDTO> createEvent(@RequestBody EventRequestDTO body, UriComponentsBuilder uriComponentsBuilder){
@@ -48,6 +47,23 @@ public class EventController {
         return ResponseEntity.ok(event);
 
     }
+
+    @GetMapping("/{eventId}/attendees")
+    public ResponseEntity<List<AttendeeEventItemDTO>> getEventAttendees(@PathVariable String eventId){
+        List<AttendeeEventItemDTO> response = this.eventService.getEventAttendees(eventId);
+        return ResponseEntity.ok(response);
+    }
+/*
+    @PostMapping("/{eventId}/attendees")
+    public ResponseEntity<AttendeeIdDTO> registerParticipant(@PathVariable String eventId, @RequestBody AttendeeToEventRequestDTO body, UriComponentsBuilder uriComponentsBuilder){
+        AttendeeIdDTO attendeeIdDTO = this.eventService.registerAttendeeOnEvent(eventId,body);
+
+        var uri = uriComponentsBuilder.path("/attendees/{attendeeId}/badge")
+                .buildAndExpand(attendeeIdDTO.attendeeId())
+                .toUri();
+
+        return  ResponseEntity.created(uri).body(attendeeIdDTO);
+    }*/
 
 /*
     private final EventService eventService;

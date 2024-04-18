@@ -8,6 +8,7 @@ import studies.com.passin.domain.attendee.exceptions.EmailAlreadyInUseException;
 import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.checkIn.CheckIn;
 import studies.com.passin.dto.attendee.*;
+import studies.com.passin.repositories.AttendeeEventRepository;
 import studies.com.passin.repositories.AttendeeRepository;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class AttendeeService {
 
     private final AttendeeRepository attendeeRepository;
+    private final AttendeeEventRepository attendeeEventRepository;
 
 
 /*
@@ -96,7 +98,7 @@ public class AttendeeService {
                 attendee.getCreatedAt());
     }
 
-    private Attendee getAttendee(String attendeeId){
+    public Attendee getAttendee(String attendeeId){
         return this.attendeeRepository
                 .findById(attendeeId)
                 .orElseThrow(() -> new AttendeeNotFoundException("Attendee not found with ID: " + attendeeId));
@@ -136,5 +138,15 @@ public class AttendeeService {
         this.attendeeRepository.delete(this.getAttendee(attendId));
     }
 
-
+    public List<AttendeeEventItemDTO> getAttendeesByEventId(String eventId){
+        return this.attendeeEventRepository
+                .findAttendeeByEventId(eventId)
+                .stream()
+                .map(attendee -> new AttendeeEventItemDTO(
+                        attendee.getAttendeeId(),
+                        attendee.getAttendeeName(),
+                        attendee.getAttendeeEmail()
+                ))
+                .toList();
+    }
 }
