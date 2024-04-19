@@ -11,7 +11,7 @@ import studies.com.passin.domain.event.Event;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "attendee_events")
+@Table(name = "attendees_events")
 @Getter
 @Setter
 @AllArgsConstructor

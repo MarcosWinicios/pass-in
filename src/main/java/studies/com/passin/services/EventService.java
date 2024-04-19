@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
+import studies.com.passin.domain.attendeeEvent.exceptions.EventAttendeeAlreadyExistsException;
 import studies.com.passin.domain.event.Event;
+import studies.com.passin.domain.event.exceptions.EventFullException;
 import studies.com.passin.dto.attendee.AttendeeEventItemDTO;
 import studies.com.passin.dto.attendee.AttendeeIdDTO;
 import studies.com.passin.dto.attendee.AttendeeToEventRequestDTO;
+import studies.com.passin.dto.attendee.EventAttendeeRegisteredDTO;
 import studies.com.passin.dto.event.EventDetailDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
@@ -17,6 +20,7 @@ import studies.com.passin.repositories.AttendeeEventRepository;
 import studies.com.passin.repositories.EventRepository;
 
 import java.text.Normalizer;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -63,54 +67,44 @@ public class EventService {
 
         return new EventResponseDTO(event, attendeeList.size());
     }
-    /*
-    public void registerAttendeeOnEvent(String eventId, AttendeeToEventRequestDTO attendeeId){
+
+    public EventAttendeeRegisteredDTO registerAttendeeOnEvent(String eventId, AttendeeToEventRequestDTO attendeeId){
 
         Event event = this.getEventById(eventId);
         Attendee attendee = this.attendeeService.getAttendee(attendeeId.attendeeId());
+
+        List<AttendeeEventItemDTO> attendeeList = this.checkEventAttendee(event.getId(), attendee);
+
+        if(event.getMaximumAttendees() <= attendeeList.size()){
+            throw new EventFullException("Event is Full");
+        }
 
         AttendeeEvent newEventAttendee = new AttendeeEvent();
 
         newEventAttendee.setEvent(event);
         newEventAttendee.setAttendee(attendee);
+        newEventAttendee.setCreatedAt(LocalDateTime.now());
 
         this.attendeeEventRepository.save(newEventAttendee);
 
-//        return new AttendeeIdDTO(newAttendee.getId());
-    }*/
+        return new EventAttendeeRegisteredDTO(newEventAttendee.getId());
+    }
 
     public List<AttendeeEventItemDTO> getEventAttendees(String eventId){
         return this.attendeeService
                 .getAttendeesByEventId(this.getEventById(eventId).getId());
     }
 
-/*
-    private final EventRepository eventRepository;
-    private final AttendeeService ateAttendeeService;
+    private List<AttendeeEventItemDTO> checkEventAttendee(String eventId, Attendee attendee){
+        var attendeeList = this.getEventAttendees(eventId);
+        attendeeList.forEach( x -> {
+            if(x.attendeeId().equals(attendee.getId())){
+                throw new EventAttendeeAlreadyExistsException("Attendee " + x.attendeeId() + " is already registered for this event");
+            }
+        });
 
-
-    public AttendeeIdDTO registerAttendeeOnEvent(String eventId, AttendeeRequestDTO attendeeRequestDTO){
-        this.ateAttendeeService.checkEmailDuplicity(attendeeRequestDTO.email(), eventId);
-
-        Event event = this.getEventById(eventId);
-        List<Attendee> attendeeList = this.ateAttendeeService.getAllAttendeesFromEvent(eventId);
-
-        if(event.getMaximumAttendees() <= attendeeList.size()){
-            throw new EventFullException("Event is Full");
-        }
-
-        Attendee newAttendee = new Attendee();
-
-        newAttendee.setName(attendeeRequestDTO.name());
-        newAttendee.setEmail(attendeeRequestDTO.email());
-        newAttendee.setEvent(event);
-        newAttendee.setCreatedAt(LocalDateTime.now());
-        this.ateAttendeeService.registerAttendee(newAttendee);
-
-        return new AttendeeIdDTO(newAttendee.getId());
+        return attendeeList;
     }
-
- */
 
     private Event getEventById(String eventId){
         return this.eventRepository.findById(eventId).orElseThrow(

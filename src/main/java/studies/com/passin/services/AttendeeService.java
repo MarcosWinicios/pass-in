@@ -99,6 +99,7 @@ public class AttendeeService {
     }
 
     public Attendee getAttendee(String attendeeId){
+
         return this.attendeeRepository
                 .findById(attendeeId)
                 .orElseThrow(() -> new AttendeeNotFoundException("Attendee not found with ID: " + attendeeId));
@@ -114,11 +115,7 @@ public class AttendeeService {
         newAttendee.setEmail(attendeeRequestDTO.email());
         newAttendee.setCreatedAt(LocalDateTime.now());
 
-        System.out.println("Attendee before: " + newAttendee);
-
         this.attendeeRepository.save(newAttendee);
-
-        System.out.println("Attendee after: " + newAttendee);
 
         return new AttendeeIdDTO(newAttendee.getId());
     }
