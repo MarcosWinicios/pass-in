@@ -54,7 +54,7 @@ public class EventService {
                         event.getDetails(),
                         event.getSlug(),
                         event.getMaximumAttendees(),
-                        2 //this.ateAttendeeService.getAllAttendeesFromEvent(event.getId()).size()
+                        this.getEventAttendees(event.getId()).size()
                 ))
                 .toList();
     }
