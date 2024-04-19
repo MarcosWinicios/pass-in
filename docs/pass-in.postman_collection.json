@@ -15,13 +15,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/events/005f4891-d0dc-4106-8b38-ae8cc6379b3d",
+							"raw": "{{host}}/events/e10ed208-cfaf-4eff-a41a-b3874dd612e6",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"events",
-								"005f4891-d0dc-4106-8b38-ae8cc6379b3d"
+								"e10ed208-cfaf-4eff-a41a-b3874dd612e6"
 							]
 						}
 					},
@@ -50,13 +50,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/events/005f4891-d0dc-4106-8b38-ae8cc6379b3d/attendees",
+							"raw": "{{host}}/events/cd410cc5-ee85-411d-ba5b-5c044e480a1e/attendees",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"events",
-								"005f4891-d0dc-4106-8b38-ae8cc6379b3d",
+								"cd410cc5-ee85-411d-ba5b-5c044e480a1e",
 								"attendees"
 							]
 						}
@@ -90,13 +90,13 @@
 					"response": []
 				},
 				{
-					"name": "Criar participante",
+					"name": "Adicionar participante ao evento",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Marcos Winicios\",\n    \"email\": \"marcos@gmail.com\"\n}",
+							"raw": "{\n    \"attendeeId\": \"3b92f6ea-20c3-49d4-837c-b4ce40b85727\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -104,13 +104,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/events/005f4891-d0dc-4106-8b38-ae8cc6379b3d/attendees",
+							"raw": "{{host}}/events/cd410cc5-ee85-411d-ba5b-5c044e480a1e/attendees",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"events",
-								"005f4891-d0dc-4106-8b38-ae8cc6379b3d",
+								"cd410cc5-ee85-411d-ba5b-5c044e480a1e",
 								"attendees"
 							]
 						}
@@ -136,6 +136,41 @@
 								"attendees",
 								"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
 								"badge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalhes de participantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/attendees/39a20be8-136c-448b-99c6-4e84198e01e6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"attendees",
+								"39a20be8-136c-448b-99c6-4e84198e01e6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos os participantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/attendees",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"attendees"
 							]
 						}
 					},
@@ -175,13 +210,39 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/attendees/f10d4172-c7ac-4c73-94a9-47b2ee60aa73",
+							"raw": "{{host}}/attendees/c5e5d915-0f87-4035-a27d-8f09f5361b97",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"attendees",
-								"f10d4172-c7ac-4c73-94a9-47b2ee60aa73"
+								"c5e5d915-0f87-4035-a27d-8f09f5361b97"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar participante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Marcos Winicios\",\n    \"email\": \"marcos@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/attendees",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"attendees"
 							]
 						}
 					},
