@@ -2,12 +2,12 @@ package studies.com.passin.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
-import studies.com.passin.dto.attendee.AttendeeEventItemDTO;
 import studies.com.passin.projections.AttendeeMinProjection;
+import studies.com.passin.projections.EventAttendeeProjection;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AttendeeEventRepository extends JpaRepository<AttendeeEvent, Integer> {
 
@@ -23,4 +23,16 @@ public interface AttendeeEventRepository extends JpaRepository<AttendeeEvent, In
             "WHERE " +
                     "atev.id_event = :eventId")
     List<AttendeeMinProjection> findAttendeeByEventId(String eventId);
+
+    @Query(nativeQuery = true, value =
+            "SELECT\n" +
+                "    id AS id,\n" +
+                "    id_event AS eventId,\n" +
+                "    id_attendee AS attendeeId,\n" +
+                "    created_at AS createdAt\n" +
+            "FROM attendees_events\n" +
+            "WHERE " +
+                "id_event = :eventId " +
+                "AND id_attendee = :attendeeId")
+    Optional<EventAttendeeProjection> findEventIdAndAttendeeId(String eventId, String attendeeId);
 }

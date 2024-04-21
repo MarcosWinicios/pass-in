@@ -63,4 +63,11 @@ public class EventController {
 
         return  ResponseEntity.created(uri).build();
     }
+
+    @DeleteMapping("/{eventId}/attendees/{attendeeId}")
+    public ResponseEntity<Void> removeEventAttendee(@PathVariable String eventId, @PathVariable String attendeeId){
+        this.eventService.removeAttendee(eventId, attendeeId);
+
+        return ResponseEntity.noContent().build();
+    }
 }

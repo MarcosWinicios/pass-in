@@ -36,4 +36,14 @@ public class AttendeeEvent {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @Override
+    public String toString() {
+        return "AttendeeEvent{" +
+                "id=" + id +
+                ", event=" + event.getId() +
+                ", attendee=" + attendee.getId() +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

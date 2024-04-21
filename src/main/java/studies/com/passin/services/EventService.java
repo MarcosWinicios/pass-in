@@ -3,6 +3,7 @@ package studies.com.passin.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import studies.com.passin.domain.attendee.Attendee;
+import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
 import studies.com.passin.domain.attendeeEvent.exceptions.EventAttendeeAlreadyExistsException;
 import studies.com.passin.domain.event.Event;
@@ -16,12 +17,16 @@ import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
 import studies.com.passin.domain.event.exceptions.EventNotFoundException;
+import studies.com.passin.projections.AttendeeMinProjection;
+import studies.com.passin.projections.EventAttendeeProjection;
 import studies.com.passin.repositories.AttendeeEventRepository;
 import studies.com.passin.repositories.EventRepository;
 
 import java.text.Normalizer;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -117,5 +122,46 @@ public class EventService {
                 replaceAll("[^\\w\\s]", "").
                 replaceAll("\\s+", "-")
                 .toLowerCase();
+    }
+
+    public void removeAttendee(String eventId, String attendeeId) {
+        AttendeeEvent attendeeEvent = this.getEventAttendee(eventId, attendeeId);
+
+        System.out.println(attendeeEvent.toString());
+
+        this.attendeeEventRepository.delete(attendeeEvent);
+    }
+
+    public AttendeeEvent getEventAttendee(String eventId, String attendeeId){
+
+        Optional<EventAttendeeProjection> attendeeEvent = this.attendeeEventRepository.findEventIdAndAttendeeId(eventId, attendeeId);
+
+        if(attendeeEvent.isEmpty()){
+            throw new AttendeeNotFoundException("Attendee Not Found!");
+        }
+
+        Event event = new Event();
+        event.setId(attendeeEvent.get().getEventId());
+
+        Attendee attendee = new Attendee();
+        attendee.setId(attendeeEvent.get().getAttendeeId());
+
+        return new AttendeeEvent(
+                Integer.parseInt(attendeeEvent.get().getId()),
+                event,
+                attendee,
+                this.localDateTimeOfString(attendeeEvent.get().getCreatedAt())
+        );
+    }
+
+    public LocalDateTime localDateTimeOfString(String value){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+
+        // Convertendo a string para LocalDateTime usando o formato personalizado
+        LocalDateTime localDateTime = LocalDateTime.parse(value, formatter);
+
+        System.out.println("LocalDateTime: " + localDateTime);
+
+        return localDateTime;
     }
 }
