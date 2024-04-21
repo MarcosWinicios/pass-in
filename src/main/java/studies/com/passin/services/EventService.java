@@ -141,7 +141,7 @@ public class EventService {
         Optional<EventAttendeeProjection> attendeeEvent = this.attendeeEventRepository.findEventIdAndAttendeeId(eventId, attendeeId);
 
         if(attendeeEvent.isEmpty()){
-            throw new AttendeeNotFoundException("Attendee " + attendeeId + "not found in Event " + eventId);
+            throw new AttendeeNotFoundException("Attendee: " + attendeeId + " not found at event: " + eventId);
         }
 
         event.setId(attendeeEvent.get().getEventId());
