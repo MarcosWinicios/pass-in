@@ -125,6 +125,7 @@ public class EventService {
     }
 
     public void removeAttendee(String eventId, String attendeeId) {
+
         AttendeeEvent attendeeEvent = this.getEventAttendee(eventId, attendeeId);
 
         System.out.println(attendeeEvent.toString());
@@ -134,16 +135,16 @@ public class EventService {
 
     public AttendeeEvent getEventAttendee(String eventId, String attendeeId){
 
+        var event = this.getEventById(eventId);
+        var attendee = this.attendeeService.getAttendee(attendeeId);
+
         Optional<EventAttendeeProjection> attendeeEvent = this.attendeeEventRepository.findEventIdAndAttendeeId(eventId, attendeeId);
 
         if(attendeeEvent.isEmpty()){
-            throw new AttendeeNotFoundException("Attendee Not Found!");
+            throw new AttendeeNotFoundException("Attendee " + attendeeId + "not found in Event " + eventId);
         }
 
-        Event event = new Event();
         event.setId(attendeeEvent.get().getEventId());
-
-        Attendee attendee = new Attendee();
         attendee.setId(attendeeEvent.get().getAttendeeId());
 
         return new AttendeeEvent(
