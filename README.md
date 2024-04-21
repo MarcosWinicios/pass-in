@@ -22,7 +22,7 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 - O participante só pode realizar check-in em um evento uma única vez;
 
 ## Diagrama de banco de dados
-![Image](https://github.com/MarcosWinicios/pass-in/blob/ffd501b830a3a3e45041be092a7cd41fc1c2ccf1/docs/database-diagram.png?raw=true)
+![Image](https://github.com/MarcosWinicios/pass-in/blob/develop/docs/database-diagram.png?raw=true)
 
 ## Tecnologias utilizadas
 - Java
