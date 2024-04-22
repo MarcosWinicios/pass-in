@@ -70,4 +70,13 @@ public class EventController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("{eventId}/check-in/{attendeeId}")
+    public ResponseEntity<Void> registerCheckIn(@PathVariable String eventId,  @PathVariable String attendeeId ,UriComponentsBuilder uriComponentsBuilder){
+        this.eventService.checkInAttendee(eventId, attendeeId);
+
+        var uri =  uriComponentsBuilder.path("/attendees/{attendeeId}/badge").buildAndExpand(attendeeId).toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
 }

@@ -3,30 +3,22 @@ package studies.com.passin.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import studies.com.passin.domain.attendee.Attendee;
-import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
 import studies.com.passin.domain.attendeeEvent.exceptions.EventAttendeeAlreadyExistsException;
 import studies.com.passin.domain.event.Event;
 import studies.com.passin.domain.event.exceptions.EventFullException;
+import studies.com.passin.domain.event.exceptions.EventNotFoundException;
 import studies.com.passin.dto.attendee.AttendeeEventItemDTO;
-import studies.com.passin.dto.attendee.AttendeeIdDTO;
 import studies.com.passin.dto.attendee.AttendeeToEventRequestDTO;
 import studies.com.passin.dto.attendee.EventAttendeeRegisteredDTO;
 import studies.com.passin.dto.event.EventDetailDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
-import studies.com.passin.domain.event.exceptions.EventNotFoundException;
-import studies.com.passin.projections.AttendeeMinProjection;
-import studies.com.passin.projections.EventAttendeeProjection;
-import studies.com.passin.repositories.AttendeeEventRepository;
 import studies.com.passin.repositories.EventRepository;
 
 import java.text.Normalizer;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +27,8 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final AttendeeService attendeeService;
-    private final AttendeeEventRepository attendeeEventRepository;
+    private final AttendeeEventService attendeeEventService;
+    private final CheckInService checkInService;
 
     public EventIdDTO createEvent(EventRequestDTO eventDTO){
         Event newEvent =  new Event();
@@ -84,13 +77,7 @@ public class EventService {
             throw new EventFullException("Event is Full");
         }
 
-        AttendeeEvent newEventAttendee = new AttendeeEvent();
-
-        newEventAttendee.setEvent(event);
-        newEventAttendee.setAttendee(attendee);
-        newEventAttendee.setCreatedAt(LocalDateTime.now());
-
-        this.attendeeEventRepository.save(newEventAttendee);
+        AttendeeEvent newEventAttendee = this.attendeeEventService.registerAttendeeOnEvent(event, attendee);
 
         return new EventAttendeeRegisteredDTO(newEventAttendee.getId());
     }
@@ -111,7 +98,7 @@ public class EventService {
         return attendeeList;
     }
 
-    private Event getEventById(String eventId){
+    public Event getEventById(String eventId){
         return this.eventRepository.findById(eventId).orElseThrow(
                 () -> new EventNotFoundException("Event not found with Id: " + eventId));
     }
@@ -127,10 +114,7 @@ public class EventService {
     public void removeAttendee(String eventId, String attendeeId) {
 
         AttendeeEvent attendeeEvent = this.getEventAttendee(eventId, attendeeId);
-
-        System.out.println(attendeeEvent.toString());
-
-        this.attendeeEventRepository.delete(attendeeEvent);
+        this.attendeeEventService.removeAttendeeFromEvent(attendeeEvent);
     }
 
     public AttendeeEvent getEventAttendee(String eventId, String attendeeId){
@@ -138,31 +122,13 @@ public class EventService {
         var event = this.getEventById(eventId);
         var attendee = this.attendeeService.getAttendee(attendeeId);
 
-        Optional<EventAttendeeProjection> attendeeEvent = this.attendeeEventRepository.findEventIdAndAttendeeId(eventId, attendeeId);
-
-        if(attendeeEvent.isEmpty()){
-            throw new AttendeeNotFoundException("Attendee: " + attendeeId + " not found at event: " + eventId);
-        }
-
-        event.setId(attendeeEvent.get().getEventId());
-        attendee.setId(attendeeEvent.get().getAttendeeId());
-
-        return new AttendeeEvent(
-                Integer.parseInt(attendeeEvent.get().getId()),
-                event,
-                attendee,
-                this.localDateTimeOfString(attendeeEvent.get().getCreatedAt())
-        );
+        return this.attendeeEventService.getEventAttendee(event, attendee);
     }
 
-    public LocalDateTime localDateTimeOfString(String value){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+    public void checkInAttendee(String eventId, String attendeeId) {
+        AttendeeEvent attendeeEvent = this.getEventAttendee(eventId, attendeeId);
 
-        // Convertendo a string para LocalDateTime usando o formato personalizado
-        LocalDateTime localDateTime = LocalDateTime.parse(value, formatter);
-
-        System.out.println("LocalDateTime: " + localDateTime);
-
-        return localDateTime;
+        this.checkInService.registerCheckIn(attendeeEvent);
     }
+
 }
