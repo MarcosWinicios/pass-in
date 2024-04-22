@@ -10,18 +10,90 @@
 			"name": "events",
 			"item": [
 				{
+					"name": "CheckIn",
+					"item": [
+						{
+							"name": "Realizar check-in",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/events/{{passIn.eventIdSelected}}/check-in/{{passIn.attendeeIdSelected}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"events",
+										"{{passIn.eventIdSelected}}",
+										"check-in",
+										"{{passIn.attendeeIdSelected}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar crachá",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c/badge",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"attendees",
+										"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
+										"badge"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Detalhes do Evento",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*",
+									"pm.test(\"Status code is 200\", () => {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"",
+									"    pm.environment.set(\"passIn.eventIdSelected\", jsonData.eventId);",
+									"    console.log(pm.environment.get(\"passIn.eventIdSelected\"));",
+									"})*/"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/events/e10ed208-cfaf-4eff-a41a-b3874dd612e6",
+							"raw": "{{host}}/events/{{passIn.eventIdSelected}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"events",
-								"e10ed208-cfaf-4eff-a41a-b3874dd612e6"
+								"{{passIn.eventIdSelected}}"
 							]
 						}
 					},
@@ -50,13 +122,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/events/cd410cc5-ee85-411d-ba5b-5c044e480a1e/attendees",
+							"raw": "{{host}}/events/{{passIn.eventIdSelected}}/attendees",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"events",
-								"cd410cc5-ee85-411d-ba5b-5c044e480a1e",
+								"{{passIn.eventIdSelected}}",
 								"attendees"
 							]
 						}
@@ -65,12 +137,29 @@
 				},
 				{
 					"name": "Criar Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"",
+									"    pm.environment.set(\"passIn.eventIdSelected\", jsonData.eventId);",
+									"    console.log(pm.environment.get(\"passIn.eventIdSelected\"));",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Novo evento\",\n    \"details\": \"Aprenda Várias tecnologias de forma Gratuita e Online!\",\n    \"maximumAttendees\": 2\n} ",
+							"raw": "{\n    \"title\": \"Evento teste\",\n    \"details\": \"Aprenda Várias tecnologias de forma Gratuita e Online!\",\n    \"maximumAttendees\": 2\n} ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,7 +185,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"attendeeId\": \"3b92f6ea-20c3-49d4-837c-b4ce40b85727\"\n}",
+							"raw": "{\n    \"attendeeId\": \"{{passIn.attendeeIdSelected}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -104,14 +193,43 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/events/cd410cc5-ee85-411d-ba5b-5c044e480a1e/attendees",
+							"raw": "{{host}}/events/{{passIn.eventIdSelected}}/attendees",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"events",
-								"cd410cc5-ee85-411d-ba5b-5c044e480a1e",
+								"{{passIn.eventIdSelected}}",
 								"attendees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover participante do evento",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/events/b37961eb-5422-43ae-829a-52e9ed3642f4/attendees/0f68bc12-0719-4b72-8762-bc58efb2bc57",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events",
+								"b37961eb-5422-43ae-829a-52e9ed3642f4",
+								"attendees",
+								"0f68bc12-0719-4b72-8762-bc58efb2bc57"
 							]
 						}
 					},
@@ -123,37 +241,18 @@
 			"name": "attendee",
 			"item": [
 				{
-					"name": "Consultar crachá",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c/badge",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"attendees",
-								"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
-								"badge"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Detalhes de participantes",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/attendees/39a20be8-136c-448b-99c6-4e84198e01e6",
+							"raw": "{{host}}/attendees/{{passIn.attendeeIdSelected}}",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"attendees",
-								"39a20be8-136c-448b-99c6-4e84198e01e6"
+								"{{passIn.attendeeIdSelected}}"
 							]
 						}
 					},
@@ -171,25 +270,6 @@
 							],
 							"path": [
 								"attendees"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Realizar check-in",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c/check-in",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"attendees",
-								"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
-								"check-in"
 							]
 						}
 					},
@@ -224,12 +304,29 @@
 				},
 				{
 					"name": "Criar participante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"",
+									"    pm.environment.set(\"passIn.attendeeIdSelected\", jsonData.attendeeId);",
+									"    console.log(pm.environment.get(\"passIn.attendeeIdSelected\"));",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Marcos Winicios\",\n    \"email\": \"marcos@gmail.com\"\n}",
+							"raw": "{\n    \"name\": \"Josias Silva\",\n    \"email\": \"josias@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
