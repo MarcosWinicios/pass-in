@@ -6,6 +6,5 @@ import studies.com.passin.domain.checkIn.CheckIn;
 import java.util.Optional;
 
 public interface CheckInRepository extends JpaRepository<CheckIn, Integer> {
-
-//    Optional<CheckIn> findByAttendeeId(String attendeeId);
+    Optional<CheckIn> findByAttendeeEventId(Integer attendeeEventId);
 }

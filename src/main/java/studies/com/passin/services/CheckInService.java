@@ -2,7 +2,7 @@ package studies.com.passin.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import studies.com.passin.domain.attendee.Attendee;
+import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
 import studies.com.passin.domain.checkIn.CheckIn;
 import studies.com.passin.domain.checkIn.exceptions.CheckInAlreadyExistsException;
 import studies.com.passin.repositories.CheckInRepository;
@@ -13,22 +13,22 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CheckInService {
-/*
+
     private final CheckInRepository checkInRepository;
 
-    public void registerCheckIn(Attendee attendee){
+    public void registerCheckIn(AttendeeEvent attendeeEvent){
 
-        this.verifyCheckInExists(attendee.getId());
+        this.verifyCheckInExists(attendeeEvent.getId());
 
         CheckIn newCheckIn = new CheckIn();
-        newCheckIn.setAttendee(attendee);
+        newCheckIn.setAttendeeEvent(attendeeEvent);
         newCheckIn.setCreatedAt(LocalDateTime.now());
-        this.checkInRepository.save(newCheckIn);
 
+        this.checkInRepository.save(newCheckIn);
     }
 
 
-    private void verifyCheckInExists(String attendeeId) {
+    private void verifyCheckInExists(Integer attendeeId) {
         Optional<CheckIn> isCheckedIn = this.getCheckIn(attendeeId);
 
         if(isCheckedIn.isPresent()){
@@ -37,10 +37,10 @@ public class CheckInService {
 
     }
 
-    public Optional<CheckIn> getCheckIn(String attendeeId) {
-        return this.checkInRepository.findByAttendeeId(attendeeId);
+    public Optional<CheckIn> getCheckIn(Integer attendeeEventId) {
+        return this.checkInRepository.findByAttendeeEventId(attendeeEventId);
     }
-
+/*
     public void deleteCheckIn(String attendeeId){
         Optional<CheckIn> checkIn = this.getCheckIn(attendeeId);
 
@@ -50,5 +50,5 @@ public class CheckInService {
 
     }
 
- */
+*/
 }
