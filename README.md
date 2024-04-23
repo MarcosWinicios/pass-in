@@ -13,11 +13,13 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 - Inscrever participante em um evento;
 - Visualizar crachá de inscrição do participante;
 - Realizar check-in do participante no evento;
+- Remover participante de um evento;
 - Excluir um participante;
 - Asssociar participantes a eventos;
 
 ## Regras de negócio
-- O participante só pode se inscrever em um evento uma única vez;
+- O participante poderá se inscrever em mais de um evento;
+- O participante não pode se increver mais de uma vez no mesmo evento;
 - O participante só pode se inscrever em eventos com vagas disponíveis;
 - O participante só pode realizar check-in em um evento uma única vez;
 
@@ -30,7 +32,7 @@ Trata-se do backend de um sistema gerenciados de eventos presenciais. Onde é po
 - Spring Boot
 - JPA / Hibernate
 - Maven
-- HyperSQL
+- H2 Database
 - Postman
 
 ## Como executar o projeto
