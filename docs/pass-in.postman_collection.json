@@ -70,13 +70,13 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"/*",
+									"",
 									"pm.test(\"Status code is 200\", () => {",
 									"    var jsonData = JSON.parse(responseBody);",
 									"",
-									"    pm.environment.set(\"passIn.eventIdSelected\", jsonData.eventId);",
+									"    pm.environment.set(\"passIn.eventIdSelected\", jsonData.event.id);",
 									"    console.log(pm.environment.get(\"passIn.eventIdSelected\"));",
-									"})*/"
+									"})"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -136,49 +136,6 @@
 					"response": []
 				},
 				{
-					"name": "Criar Evento",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", () => {",
-									"    var jsonData = JSON.parse(responseBody);",
-									"",
-									"    pm.environment.set(\"passIn.eventIdSelected\", jsonData.eventId);",
-									"    console.log(pm.environment.get(\"passIn.eventIdSelected\"));",
-									"})"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Evento teste\",\n    \"details\": \"Aprenda Várias tecnologias de forma Gratuita e Online!\",\n    \"maximumAttendees\": 2\n} ",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/events",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Adicionar participante ao evento",
 					"request": {
 						"method": "POST",
@@ -230,6 +187,49 @@
 								"b37961eb-5422-43ae-829a-52e9ed3642f4",
 								"attendees",
 								"0f68bc12-0719-4b72-8762-bc58efb2bc57"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Evento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"",
+									"    pm.environment.set(\"passIn.eventIdSelected\", jsonData.eventId);",
+									"    console.log(pm.environment.get(\"passIn.eventIdSelected\"));",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Evento teste\",\n    \"details\": \"Aprenda Várias tecnologias de forma Gratuita e Online!\",\n    \"maximumAttendees\": 2\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/events",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"events"
 							]
 						}
 					},
@@ -326,7 +326,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Josias Silva\",\n    \"email\": \"josias@gmail.com\"\n}",
+							"raw": "{\n    \"name\": \"Josias Silva\",\n    \"email\": \"josias2@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
