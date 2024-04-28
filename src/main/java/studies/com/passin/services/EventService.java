@@ -2,12 +2,14 @@ package studies.com.passin.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
 import studies.com.passin.domain.attendeeEvent.exceptions.EventAttendeeAlreadyExistsException;
 import studies.com.passin.domain.event.Event;
 import studies.com.passin.domain.event.exceptions.EventFullException;
 import studies.com.passin.domain.event.exceptions.EventNotFoundException;
+import studies.com.passin.dto.attendee.AttendeeBadgeResponseDTO;
 import studies.com.passin.dto.attendee.AttendeeEventItemDTO;
 import studies.com.passin.dto.attendee.AttendeeToEventRequestDTO;
 import studies.com.passin.dto.attendee.EventAttendeeRegisteredDTO;
@@ -131,4 +133,7 @@ public class EventService {
         this.checkInService.registerCheckIn(attendeeEvent);
     }
 
+    public AttendeeBadgeResponseDTO getAttendeeBadge(String eventId, String attendeeId, UriComponentsBuilder uriComponentsBuilder) {
+        return null;
+    }
 }

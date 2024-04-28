@@ -2,13 +2,12 @@ package studies.com.passin.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.attendee.exceptions.EmailAlreadyInUseException;
-import studies.com.passin.dto.attendee.AttendeeDetailsDTO;
-import studies.com.passin.dto.attendee.AttendeeEventItemDTO;
-import studies.com.passin.dto.attendee.AttendeeIdDTO;
-import studies.com.passin.dto.attendee.AttendeeRequestDTO;
+import studies.com.passin.domain.event.Event;
+import studies.com.passin.dto.attendee.*;
 import studies.com.passin.repositories.AttendeeEventRepository;
 import studies.com.passin.repositories.AttendeeRepository;
 
@@ -120,19 +119,20 @@ public class AttendeeService {
 
         return new AttendeesListResponseDTO(attendeeDetailsList);
     }
-
-    public AttendeeBadgeResponseDTO getAttendeeBadge(String attendeeId, UriComponentsBuilder uriComponentsBuilder){
+*/
+    public AttendeeBadgeResponseDTO getAttendeeBadge(String attendeeId, UriComponentsBuilder uriComponentsBuilder) {
 
         Attendee attendee = this.getAttendee(attendeeId);
 
-        var uri = uriComponentsBuilder.path("/attendees/{attendeeId}/check-in")
+        var uri = uriComponentsBuilder.path("events/{eventId}/check-in/{attendeeId}")
                 .buildAndExpand(attendeeId)
                 .toUri()
                 .toString();
 
-        AttendeeBadgeDTO attendeeBadgeDTO = new AttendeeBadgeDTO(attendee.getName(), attendee.getEmail(), uri, attendee.getEvent().getId());
+
+        AttendeeBadgeDTO attendeeBadgeDTO = new AttendeeBadgeDTO(attendee.getName(), attendee.getEmail(), uri, new Event().getId());
 
         return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
     }
-*/
+
 }
