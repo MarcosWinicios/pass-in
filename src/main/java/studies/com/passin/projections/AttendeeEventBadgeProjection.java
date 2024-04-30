@@ -1,6 +1,6 @@
 package studies.com.passin.projections;
 
-public interface AttendeeEventBadge {
+public interface AttendeeEventBadgeProjection {
 
     String getAttendeeName();
     String getAttendeeEmail();
