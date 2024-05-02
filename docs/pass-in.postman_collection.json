@@ -38,13 +38,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/attendees/ecafb491-9af1-44ec-99b1-a709a7b9e70c/badge",
+									"raw": "{{host}}/events/{{passIn.eventIdSelected}}/attendees/{{passIn.attendeeIdSelected}}/badge",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"events",
+										"{{passIn.eventIdSelected}}",
 										"attendees",
-										"ecafb491-9af1-44ec-99b1-a709a7b9e70c",
+										"{{passIn.attendeeIdSelected}}",
 										"badge"
 									]
 								}
