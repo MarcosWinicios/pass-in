@@ -3,6 +3,7 @@ package studies.com.passin.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
+import studies.com.passin.projections.AttendeeEventBadgeProjection;
 import studies.com.passin.projections.AttendeeMinProjection;
 import studies.com.passin.projections.EventAttendeeProjection;
 
@@ -35,4 +36,19 @@ public interface AttendeeEventRepository extends JpaRepository<AttendeeEvent, In
                 "id_event = :eventId " +
                 "AND id_attendee = :attendeeId")
     Optional<EventAttendeeProjection> findEventIdAndAttendeeId(String eventId, String attendeeId);
+
+    @Query(nativeQuery = true, value = "SELECT\n" +
+            "    att.id AS \"attendeeId\",\n" +
+            "    att.name AS \"attendeeName\",\n" +
+            "    att.email AS \"attendeeEmail\",\n" +
+            "    ev.id AS \"eventId\",\n" +
+            "    ev.title AS \"eventTitle\"\n" +
+            "FROM attendees att \n" +
+            "    INNER JOIN attendees_events attev\n" +
+            "        ON att.id = attev.id_attendee\n" +
+            "    INNER JOIN events ev\n" +
+            "        ON ev.id = attev.id_event\n" +
+            "WHERE\n" +
+            "    attev.id = :attendeeEventId")
+    Optional<AttendeeEventBadgeProjection> findAttendeeEventBadge(Integer attendeeEventId);
 }
