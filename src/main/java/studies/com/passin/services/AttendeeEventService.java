@@ -6,6 +6,7 @@ import studies.com.passin.domain.attendee.Attendee;
 import studies.com.passin.domain.attendee.exceptions.AttendeeNotFoundException;
 import studies.com.passin.domain.attendeeEvent.AttendeeEvent;
 import studies.com.passin.domain.event.Event;
+import studies.com.passin.projections.AttendeeEventBadgeProjection;
 import studies.com.passin.projections.EventAttendeeProjection;
 import studies.com.passin.repositories.AttendeeEventRepository;
 
@@ -63,6 +64,14 @@ public class AttendeeEventService {
         System.out.println("LocalDateTime: " + localDateTime);
 
         return localDateTime;
+    }
+
+    public AttendeeEventBadgeProjection getAttendeeEventBadgeProjection(AttendeeEvent attendeeEvent){
+        Optional<AttendeeEventBadgeProjection> badge = this.attendeeEventRepository.findAttendeeEventBadge(attendeeEvent.getId());
+        if(!badge.isPresent()){
+            throw new RuntimeException("Badge not found!");
+        }
+        return badge.get();
     }
 
 

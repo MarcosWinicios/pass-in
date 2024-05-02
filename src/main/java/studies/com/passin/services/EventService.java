@@ -9,14 +9,12 @@ import studies.com.passin.domain.attendeeEvent.exceptions.EventAttendeeAlreadyEx
 import studies.com.passin.domain.event.Event;
 import studies.com.passin.domain.event.exceptions.EventFullException;
 import studies.com.passin.domain.event.exceptions.EventNotFoundException;
-import studies.com.passin.dto.attendee.AttendeeBadgeResponseDTO;
-import studies.com.passin.dto.attendee.AttendeeEventItemDTO;
-import studies.com.passin.dto.attendee.AttendeeToEventRequestDTO;
-import studies.com.passin.dto.attendee.EventAttendeeRegisteredDTO;
+import studies.com.passin.dto.attendee.*;
 import studies.com.passin.dto.event.EventDetailDTO;
 import studies.com.passin.dto.event.EventIdDTO;
 import studies.com.passin.dto.event.EventRequestDTO;
 import studies.com.passin.dto.event.EventResponseDTO;
+import studies.com.passin.projections.AttendeeEventBadgeProjection;
 import studies.com.passin.repositories.EventRepository;
 
 import java.text.Normalizer;
@@ -134,6 +132,22 @@ public class EventService {
     }
 
     public AttendeeBadgeResponseDTO getAttendeeBadge(String eventId, String attendeeId, UriComponentsBuilder uriComponentsBuilder) {
-        return null;
+        var attendeeRegister = this.getEventAttendee(eventId, attendeeId);
+
+        AttendeeEventBadgeProjection badgeProjection =  this.attendeeEventService.getAttendeeEventBadgeProjection(attendeeRegister);
+
+        var uri = uriComponentsBuilder.path("events/{eventId}/check-in/{attendeeId}")
+                .buildAndExpand(badgeProjection.getEventId(), badgeProjection.getAttendeeId())
+                .toUri()
+                .toString();
+
+        AttendeeBadgeDTO attendeeBadgeDTO = new AttendeeBadgeDTO(
+                badgeProjection.getAttendeeName(),
+                badgeProjection.getAttendeeEmail(),
+                uri,
+                badgeProjection.getEventId());
+
+        return new AttendeeBadgeResponseDTO(attendeeBadgeDTO);
+
     }
 }
