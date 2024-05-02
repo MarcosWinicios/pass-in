@@ -83,8 +83,8 @@ public class EventController {
     @GetMapping("/{eventId}/attendees/{attendeeId}/badge")
     public ResponseEntity<AttendeeBadgeResponseDTO> getAttendeeBadge(@PathVariable String eventId, @PathVariable String attendeeId, UriComponentsBuilder uriComponentsBuilder){
         AttendeeBadgeResponseDTO response =  this.eventService.getAttendeeBadge(eventId, attendeeId, uriComponentsBuilder);
-        return ResponseEntity.ok(response);
 
+        return ResponseEntity.ok(response);
     }
 
 }

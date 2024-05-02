@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import studies.com.passin.dto.attendee.AttendeeBadgeResponseDTO;
 import studies.com.passin.dto.attendee.AttendeeDetailsDTO;
 import studies.com.passin.dto.attendee.AttendeeIdDTO;
 import studies.com.passin.dto.attendee.AttendeeRequestDTO;
 import studies.com.passin.services.AttendeeService;
-import studies.com.passin.services.CheckInService;
 
 import java.util.List;
 
